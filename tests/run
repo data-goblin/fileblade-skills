@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd "$(dirname "$0")/.."
+gate_state=$(mktemp -d /tmp/fileblade-skills-tests.XXXXXX)
+trap 'rm -rf -- "$gate_state"' EXIT
+export XDG_STATE_HOME="$gate_state"
+export PYTHONDONTWRITEBYTECODE=1
+python3 tests/unit.py
+python3 tests/test_path_identity.py
+python3 tests/test_watch.py
+python3 tests/keymap.py
+python3 tests/contract.py
+core_tests=$(python3 -B -c 'import agent_skills, fileblade_paths; from pathlib import Path; print(Path(fileblade_paths.__file__).resolve().parents[1] / "tests/companion_readonly.py")')
+python3 -B "$core_tests" "$PWD" agent_skills agent-skillsctl
+python3 -m py_compile bin/agent-skillsctl agent_skills/*.py tests/*.py
+env -u QT_QPA_PLATFORMTHEME QT_QPA_PLATFORM=offscreen QT_STYLE_OVERRIDE=Basic \
+  /usr/lib/qt6/bin/qmltestrunner -platform offscreen -input tests/tst_service.qml
+env -u QT_QPA_PLATFORMTHEME QT_QPA_PLATFORM=offscreen QT_STYLE_OVERRIDE=Basic \
+  /usr/lib/qt6/bin/qmltestrunner -platform offscreen -input tests/tst_host_guard.qml
+mapfile -t qml < <(find . -path ./.git -prune -o -type f -name '*.qml' -print | sort)
+qmllint "${qml[@]}"
+printf '%s\n' 'agent-skills checks: ok'
