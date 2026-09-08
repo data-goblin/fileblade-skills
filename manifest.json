@@ -29,6 +29,7 @@
         "glyph": "󰖷",
         "description": "Agent skills for the selected project, by scope and source",
         "entry": "blades/Module.qml",
+        "provider": "Provider.qml",
         "singleton": true,
         "minHeight": 160,
         "hostContract": 2

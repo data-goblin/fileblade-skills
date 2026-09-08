@@ -4,6 +4,7 @@ cd "$(dirname "$0")/.."
 gate_state=$(mktemp -d /tmp/fileblade-skills-tests.XXXXXX)
 trap 'rm -rf -- "$gate_state"' EXIT
 export XDG_STATE_HOME="$gate_state"
+PYTHONDONTWRITEBYTECODE=1 python3 tests/test_host_status.py
 export PYTHONDONTWRITEBYTECODE=1
 python3 tests/unit.py
 python3 tests/test_path_identity.py

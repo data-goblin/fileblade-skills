@@ -73,6 +73,7 @@ def test_license_and_readme() -> None:
 def test_qml_shape() -> None:
     module = (ROOT / "blades" / "Module.qml").read_text(encoding="utf-8")
     service = (ROOT / "Service.qml").read_text(encoding="utf-8")
+    provider = (ROOT / "Provider.qml").read_text(encoding="utf-8")
     inventory = (CORE / "ui/ArtifactInventory.qml").read_text(encoding="utf-8")
     lane = (CORE / "ui/InventoryLane.qml").read_text(encoding="utf-8")
     directories = (CORE / "ui/ArtifactDirectories.qml").read_text(encoding="utf-8")
@@ -146,7 +147,7 @@ def test_qml_shape() -> None:
     check("qml.blade-open-aware", "context.bladeOpen === false" in module)
     check("qml.shift-r", "rescan" in module)
     check("qml.schema-guard", "response.schemaVersion !== 1" in lane)
-    check("qml.clamps-items", "maximumItems: 256" in service and "i < owner.maximumItems" in lane
+    check("qml.clamps-items", "maximumItems: 256" in provider and "i < owner.maximumItems" in lane
           and "rows.slice(0, maximumItems)" in inventory)
     check("qml.skill-folder-rows", "function skillDirectoryPath(path)" in module
           and "descriptorPath: descriptorPath" in module
