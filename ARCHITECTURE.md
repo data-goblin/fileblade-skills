@@ -80,3 +80,10 @@ of `tests/run`. They cover cold creation, shared observers, last detach, termina
 shutdown, stripped manifests, both provider ownership paths, unavailable commands,
 malformed authority, output limits and timeouts. User-visible expectation: an
 enabled responding FileBlade produces no missing-host card on either shell API.
+
+This file was written by an agent.
+
+The explicit host-enable action acquires no code. It has a 20-second overall
+command deadline with one second to terminate, a five-second enable deadline,
+and bounded status attempts. It discards command output instead of accumulating
+it in a shell variable; the button becomes retryable after the deadline.
