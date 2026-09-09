@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "data-goblin.fileblade-skills",
   "name": "FileBlade Agent Skills",
-  "version": "0.1.0-beta",
+  "version": "0.1.0",
   "author": "Kurt Buhler",
   "license": "MIT",
   "description": "Browse agent skills from documented Codex, Claude Code, OpenCode, Pi, Copilot CLI, and Antigravity roots inside a FileBlade blade.",
